@@ -62,7 +62,7 @@ def create_sample_type_list(sample_type_list):
     return sample_type_list
 
 
-df, compound_dict = read_data_csv('/Users/abedpablo/Desktop/XMLtest/deidentify/deidentified/sample_data.csv')
-qa_compound_dict, int_std_dict = read_qa('/Users/abedpablo/Documents/Projects/Opiates/Documents/Data/qa.csv',
+df, compound_dict = read_data_csv('/dashboard_files/sample_data.csv')
+qa_compound_dict, int_std_dict = read_qa('/dashboard_files/qa.csv',
                                          compound_dict)
 available_samples = create_sample_type_list(df['sample_type'].unique().tolist())

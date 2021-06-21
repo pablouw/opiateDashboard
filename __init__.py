@@ -15,13 +15,11 @@ from absoluteRT import absoluteRT
 from process_data import df, qa_compound_dict, compound_dict, int_std_dict
 
 
-# external_stylesheets = ['https://codepen.io/pablouw/pen/zYrWWQJ.css']
-# app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app = dash.Dash(__name__)
 
 
-image_filename = '/Users/abedpablo/Downloads/uwmedlogo.png'
-uwlabmed_filename = '/Users/abedpablo/Downloads/uwlabmed.png'
+image_filename = '/dashboard_files/uwmedlogo.png'
+uwlabmed_filename = '/dashboard_files/uwlabmed.png'
 encoded_image = base64.b64encode(open(image_filename, 'rb').read())
 labmed_encoded_image = base64.b64encode(open(uwlabmed_filename, 'rb').read())
 instruments = dict([('Xevo 1', 1), ('Xevo 2', 2)])
