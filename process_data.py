@@ -39,6 +39,13 @@ def read_qa(qa_file, diction):
     qa_df = pd.read_csv(qa_file)
     qa_df.qa_compound.replace(['Ethyl glucuronide'], ['Ethyl Glucuronide'], inplace=True)
     qa_df.qa_compound.replace(['Norbuprenorphine glucuronide'], ['Norbuprenorphine Glucuronide'], inplace=True)
+    cols = ['ion_ratio_avg', 'ion_ratio_cv', 'rel_reten_low', 'rel_reten_high', 'rel_reten',
+            'amr_low', 'amr_high', 'signoise_stda']
+    qa_df['rel_reten'] = (qa_df['rel_reten_high'] + qa_df['rel_reten_low']) / 2
+    qa_df[cols] = qa_df[cols].apply(pd.to_numeric)
+    qa_df ['delta'] = qa_df['ion_ratio_avg'] * qa_df['ion_ratio_cv']
+    qa_df['ion_ratio_low'] = qa_df['ion_ratio_avg'] - qa_df['delta']
+    qa_df['ion_ratio_high'] = qa_df['ion_ratio_avg'] + qa_df['delta']
     qa_dict = create_qa_dict(qa_df)
 
     qa_cop = qa_df.copy()
