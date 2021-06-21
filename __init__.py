@@ -16,7 +16,7 @@ from process_data import df, qa_compound_dict, compound_dict, int_std_dict
 
 
 app = dash.Dash(__name__)
-
+server = app.server
 
 image_filename = '/dashboard_files/uwmedlogo.png'
 uwlabmed_filename = '/dashboard_files/uwlabmed.png'
