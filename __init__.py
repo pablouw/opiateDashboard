@@ -119,7 +119,7 @@ def update_hist_graph(sample_types, xevo, hist_compnd, hist_param, start_date, e
 
     # Sample Type
     if sample_types != 'All':
-        dff = dff[dff['sample_type'].str.contains(sample_types) == True]  # == True
+        dff = dff[dff['sample_type'].str.contains(sample_types)]
     sample_types = sample_types.replace("|", " & ")
 
     # Date Range
@@ -193,7 +193,7 @@ def update_hist_graph(sample_types, xevo, hist_compnd, hist_param, start_date, e
 def update_avg_graph(time_frame, avg_param, avg_sample_type, avg_compound, xevo):
     # Sample Type
     if avg_sample_type != 'All':
-        dfa = df[df['sample_type'].str.contains(avg_sample_type) == True]
+        dfa = df[df['sample_type'].str.contains(avg_sample_type)]
     else:
         dfa = df
     # Obtain statistical data for display
@@ -201,6 +201,7 @@ def update_avg_graph(time_frame, avg_param, avg_sample_type, avg_compound, xevo)
 
     # Assess parameter and build lines and annotations accordingly
     if avg_param == 'is_peak_area':
+        y_title = 'IS Peak Area'
         avg_compound = compound_dict[avg_compound]
         qa_val = int_std_dict[avg_compound]
         shape, annotation = build_graph.create_horizontal_line(qa_val)
@@ -215,13 +216,16 @@ def update_avg_graph(time_frame, avg_param, avg_sample_type, avg_compound, xevo)
         qa_compound = qa_compound_dict[avg_compound]
         qa_val = qa_compound[param_qa_dict[avg_param]]
         shape, annotation = build_graph.create_horizontal_line(qa_val)
+        y_title = 'SigNoise'
         if avg_param == 'rrt':
+            y_title = 'Relative RT'
             high = qa_compound['rel_reten_high']
             low = qa_compound['rel_reten_low']
             horizontal_range = build_graph.create_horizontal_range_lines(low, high, avg_param)
             shape.append(horizontal_range)
             number_format = "{:.3f}"
         elif avg_param == 'ion_ratio':
+            y_title = 'Ion Ratio'
             low = qa_compound['ion_ratio_low']
             high = qa_compound['ion_ratio_high']
             horizontal_range = build_graph.create_horizontal_range_lines(low, high, avg_param)
@@ -275,7 +279,7 @@ def update_avg_graph(time_frame, avg_param, avg_sample_type, avg_compound, xevo)
         'layout': dict(
             title=avg_compound,
             xaxis={'title': fig_title},
-            yaxis={'title': 'IS Peak Area (+/- 1 Std Dev)'},
+            yaxis={'title': f'{y_title} (+/- 1 Std Dev)'},
             margin={'l': 70, 'b': 40, 't': 80, 'r': 0},
             hovermode='closest',
             shapes=shape,

@@ -2,12 +2,12 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_daq as daq
 from process_data import df, qa_compound_dict
-
+import numpy as np
 
 instruments = dict([('Xevo 1', 1), ('Xevo 2', 2)])
 min_date = df['Date'].min().date()
 max_date = df['Date'].max().date()
-
+std_a_compounds = [key for key, values in qa_compound_dict.items() if not np.isnan(values['signoise_stda'])]
 
 standard_a = [
     html.Br(),
@@ -47,8 +47,8 @@ standard_a = [
                             'Compound:',
                             dcc.Dropdown(
                                 id='compound-view',
-                                options=[{'label': k, 'value': k} for k, v in qa_compound_dict.items()],
-                                value=list(qa_compound_dict.keys())[0],
+                                options=[{'label': item, 'value': item} for item in std_a_compounds],
+                                value=std_a_compounds[0],
                                 clearable=False,
                                 style={
                                     'width': '100%',
