@@ -14,13 +14,18 @@ dashboard imports data from the database and presents the data to the user.
 The dashboard possesses 5 different graphical visualizations that summarize 
 the metadata in different manners.
 
-The assay measures 17 opioids and 7 opioid glucuronide metabolites, 
+The assay measures 12 opioids and 11 metabolites plus ethyl glucuronide, 
 performed on one of two Waters Xevo TQS instruments. Pathologists on our 
 Clinical Chemistry service then integrate results from the assay with 
 information from the patient’s chart to provide interpretations for the 
 results. These results and interpretations are used to support decisions to 
 continue or discontinue patient opioid therapy, and therefore robust quality 
 control metrics are critical to the assay's clinical utility.
+
+The folder "dashboard_files" holds a file, "qa", that holds the quality control
+cutoff values and ranges for each compound of the assay. Additionally, the
+file "sample_data" holds data collected from the LCMS test after being
+parsed and formatted in a data table.
 
 ### Histogram
 The histogram visualization displays the cumulative data based on the 
