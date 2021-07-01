@@ -22,7 +22,7 @@ app = dash.Dash(__name__)
 server = app.server
 
 image_filename = f'{actual_dir}/dashboard_files/uwmedlogo.png'
-uwlabmed_filename = f'{actual_dir}/dashboard_files/uwlabmed.png'
+uwlabmed_filename = f'{actual_dir}/dashboard_files/uwlabmedpath.png'
 encoded_image = base64.b64encode(open(image_filename, 'rb').read())
 labmed_encoded_image = base64.b64encode(open(uwlabmed_filename, 'rb').read())
 instruments = dict([('Xevo 1', 1), ('Xevo 2', 2)])
@@ -96,8 +96,8 @@ app.layout = html.Div([
         html.Img(
             src='data:image/png;base64,{}'.format(labmed_encoded_image.decode()),
             style={
-                'height': '89px',
-                'width': '225px',
+                'height': '120px',
+                'width': '250px',
                 'margin': '30px auto',
                 'margin-top': "70px",
                 'display': 'block'
