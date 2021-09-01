@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import pathlib
 import sqlalchemy
+import sys
 
 
 def calculate_parameters(data):
@@ -12,11 +13,14 @@ def calculate_parameters(data):
     data = data.replace({'rrt': 0}, np.nan)
     return data
 
-def read_sql_results():
-    # SQLlite
-    engine = sqlalchemy.create_engine('sqlite:////Path/to/file/opiates.db')
-    # PostgreSQL
-    # engine = sqlalchemy.create_engine('postgresql://username:password@localhost/opiates')
+def read_sql_results(db):
+    if db == 'sqlite':
+        engine = sqlalchemy.create_engine('sqlite:////Path/to/file/opiates.db')
+    elif db == 'postgresql':
+        engine = sqlalchemy.create_engine('postgresql://username:password@localhost/opiates')
+    else:
+        print('No appropriate db selected. Program will exit.')
+        sys.exit()
     conn = engine.connect()
     df = pd.read_sql_query("""
     SELECT *
