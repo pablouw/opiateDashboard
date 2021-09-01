@@ -2,6 +2,7 @@ import itertools
 import pandas as pd
 import numpy as np
 import pathlib
+import sqlalchemy
 
 
 def calculate_parameters(data):
@@ -11,7 +12,26 @@ def calculate_parameters(data):
     data = data.replace({'rrt': 0}, np.nan)
     return data
 
+def read_sql_results():
+    # SQLlite
+    engine = sqlalchemy.create_engine('sqlite:////Path/to/file/opiates.db')
+    # PostgreSQL
+    # engine = sqlalchemy.create_engine('postgresql://username:password@localhost/opiates')
+    conn = engine.connect()
+    df = pd.read_sql_query("""
+    SELECT *
+    FROM  "results"
+    """, conn)
+    
+    df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d')
+    df = df[df['sample_type'].notna()]
+    df = calculate_parameters(df)
+    # build IS-Compound dict
+    sub_df = df.drop_duplicates(subset=['compound_id'], keep='first')
+    intstd_dict = dict(zip(sub_df['compound'], sub_df.int_std))
+    return df, intstd_dict
 
+   
 def read_data_csv(file):
     opiate_df = pd.read_csv(file)
     opiate_df['Date'] = pd.to_datetime(opiate_df['Date'], format='%Y-%m-%d')
