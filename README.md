@@ -59,3 +59,16 @@ calculated average +/- 2 standard deviations. The running average is calculated
 from all the calibrator sets ran in the listed date range for the selected 
 instrument. This visualization helps to identify any potential chromatography 
 issues that need to be addressed.
+
+#### Database
+The XML parser repository can be found at https://github.com/pablouw/opiateDatabase.
+For the mock-dashboard linked above which is created by the code in this repository,
+the data is provided the CSV file in the folder
+opiateDashboard/dashboard_files/sample_data.csv. In order for the dashboard to
+obtain data from the dashboard the user would have to connect to the database
+and collect the necessary information. In process_data.py, line 92 should be
+changed to ```df, compound_dict = read_sql_results(db)``` to read the result
+data from the database result table where db is either 'sqlite' or 'postgresql'.
+Additionally, in the read_sql_results function, the path should be edited
+to the appropriate location of the database.
+
